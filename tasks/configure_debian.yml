@@ -28,6 +28,18 @@
     - restart apache
 
 
+- name : create configuration management if not exists - available
+  file :
+    path  : "{{ item }}"
+    state : directory
+    owner : root
+    group : root
+    mode  : 0750
+  with_items :
+    - "/etc/apache2/conf-available"
+    - "/etc/apache2/conf-enabled"
+
+
 - name : generate security.conf config file
   template :
     src   : "{{ item }}"
@@ -40,6 +52,13 @@
     - "{{ role_path }}/templates/security.conf.j2"
   notify :
     - restart apache
+
+
+- name : check security configuration activated
+  file :
+    src   : /etc/apache2/conf-available/security.conf
+    dest  : /etc/apache2/conf-enabled/security.conf
+    state : link
 
 
 - name : disable some modules
