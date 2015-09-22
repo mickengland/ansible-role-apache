@@ -1,0 +1,9 @@
+---
+
+- name : install apache packages
+  apt  :
+    name  : "{{ item }}"
+    state : "{{ apache_package_state }}"
+  with_items : "{{ apache_packages }}"
+  notify :
+    - restart apache
