@@ -54,6 +54,13 @@
     - restart apache
 
 
+- name : check security configuration activated
+  file :
+    src   : /etc/apache2/conf-available/security.conf
+    dest  : /etc/apache2/conf-enabled/security.conf
+    state : link
+
+
 - name : disable some modules
   apache2_module :
     name  : "{{ item }}"
