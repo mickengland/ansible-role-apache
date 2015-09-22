@@ -31,5 +31,7 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
+  - "sudo ls -lh /etc/apache2/"
+
   # Check apache service is running
   - test "403" == `curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1`
